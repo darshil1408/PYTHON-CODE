@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+x = np.array([1, 2, 3, 4])
+h = np.array([1, 0, -1])
+lin_conv = np.convolve(x, h)
+print("Linear convolution result:", lin_conv)
+plt.show()
+N = max(len(x), len(h))
+X = np.fft.fft(x, n=N)
+H = np.fft.fft(h, n=N)
+circ_conv = np.fft.ifft(X * H).real
+print("Circular convolution result:", circ_conv)
+plt.show()
+plt.figure(figsize=(10,5))
+plt.stem(lin_conv, linefmt='b-', markerfmt='bo', label='Linear Convolution')
+plt.stem(circ_conv, linefmt='r--', markerfmt='rx', label='Circular Convolution')
+plt.title('Linear vs Circular Convolution')
+plt.xlabel('Index')
+plt.ylabel('Amplitude')
+plt.legend()
+plt.grid(True)
+plt.show()
